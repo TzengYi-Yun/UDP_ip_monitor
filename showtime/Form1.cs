@@ -9,9 +9,11 @@ namespace showtime
     {
         UdpClient U;
         Thread Th;
+
         public Form1()
         {
             InitializeComponent();
+            label3.Enabled = true;
         }
 
         //∫ ≈•∞∆µ{ß«
@@ -160,6 +162,7 @@ namespace showtime
         {
 
         }
+
 
         private void label3_Click(object sender, EventArgs e)
         {
