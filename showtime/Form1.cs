@@ -112,36 +112,37 @@ namespace showtime
 
         }
 
-        //找出本機 IP
+        // 找出本機的 IPv4 地址
         private string MyIP()
         {
-            string hn = Dns.GetHostName();
-            //取得本機電腦名稱
-            IPAddress[] ip = Dns.GetHostEntry(hn).AddressList;
-            //取得本機IP 陣列
+            string hn = Dns.GetHostName(); // 取得本機電腦名稱
+            IPAddress[] ip = Dns.GetHostEntry(hn).AddressList; // 取得本機 IP 陣列
+
+            // 遍歷所有的 IP 地址
+            foreach (IPAddress it in ip)
             {
-                foreach (IPAddress it in ip)
-                    // 列舉各個IP
-                    if (it.AddressFamily == AddressFamily.InterNetwork)
-                    //如果是IPv4 格式
+                // 檢查是否為 IPv4 地址
+                if (it.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    string addr = it.ToString();
+
+                    //  只要 10.x.x.x
+                    if (addr.StartsWith("10."))
                     {
-                        return it.ToString();
+                        return addr; // 找到直接回傳
                     }
+                }
             }
-            //傳回此IP 字串
-            return "";
+
+            return "No 10.x.x.x IP found"; // 如果沒有
         }
-        //找不到合格 IP,回傳空字串
-        //表單載入
-        private void Forml_Load(object sender, EventArgs e)
+
+        // 表單載入
+        private void Form1_Load(object sender, EventArgs e)
         {
             this.Text += " " + MyIP();
         }
-        //顯示本機IP於標題列
-        private void Form1_Load(object sender, EventArgs e)
-        {
 
-        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
